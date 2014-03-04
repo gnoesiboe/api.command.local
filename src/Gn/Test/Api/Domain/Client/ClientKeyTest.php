@@ -63,9 +63,9 @@ class ClientKeyTest extends Test
      */
     public function testOnlyAcceptsAStringOf40Characters()
     {
-        $stringToShort = 'a9382';
-        $stringToLong = 'asdfjaskjasdfjaskjasdfjaskjasdfjaskjasdfjaskjasdfjaskjasdfjaskjasdfjaskjasdfjaskjasdfjaskjasdfjaskjasdfjaskjasdfjaskjasdfjaskjasdfjaskj';
-        $stringJustRight = sha1('32as#e');
+        $stringToShort = str_repeat('x', ClientKey::SUPPORTED_LENGTH - 1);
+        $stringToLong = str_repeat('x', ClientKey::SUPPORTED_LENGTH + 1);
+        $stringJustRight = str_repeat('x', ClientKey::SUPPORTED_LENGTH);
 
         try {
             new ClientKey($stringToShort);

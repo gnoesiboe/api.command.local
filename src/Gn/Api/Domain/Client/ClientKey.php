@@ -4,6 +4,7 @@ namespace Gn\Api\Domain\Client;
 
 use Gn\Api\Domain\SingleValueObjectInterface;
 use Symfony\Component\Validator\Constraints\Length;
+use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Validation;
 
 /**
@@ -18,14 +19,9 @@ class ClientKey implements ClientKeyInterface
     private $value;
 
     /**
-     * @var string
+     * @var int
      */
-    const MIN_LENGTH = 40;
-
-    /**
-     * @var string
-     */
-    const MAX_LENGTH = 40;
+    const SUPPORTED_LENGTH = 40;
 
     /**
      * @param string $value
@@ -54,10 +50,15 @@ class ClientKey implements ClientKeyInterface
             throw new ClientKeyInvalidException('Client key value should be of type string');
         }
 
-        $violations = Validation::createValidator()->validateValue($value, new Length(array('min' => self::MIN_LENGTH, 'max' => self::MAX_LENGTH)));
+        $constraints = array(
+            new NotBlank(),
+            new Length(array('min' => self::SUPPORTED_LENGTH, 'max' => self::SUPPORTED_LENGTH))
+        );
+
+        $violations = Validation::createValidator()->validateValue($value, $constraints);
 
         if ($violations->count() !== 0) {
-            throw new ClientKeyInvalidException(sprintf('ClientKey Value should have a minimal length of %s and a max of %s characters', self::MIN_LENGTH, self::MAX_LENGTH));
+            throw new ClientKeyInvalidException(sprintf('ClientKey Value should have a length of %s characters', self::SUPPORTED_LENGTH));
         }
     }
 

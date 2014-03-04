@@ -50,11 +50,18 @@ class ClientTest extends Test
         $this->client = new Client($this->clientName, $this->clientIdentifier, $this->clientKey);
     }
 
-    public function testGetKeyReturnsAClientKeyInterfaceInstance()
+    /**
+     * Client::getKey should return a concrete implementation of ClientKeyInterface
+     */
+    public function testGetKeyReturnsAnImplementationOfClientKeyInterface()
     {
         $this->assertInstanceOf('\Gn\Api\Domain\Client\ClientKeyInterface', $this->client->getKey());
     }
 
+    /**
+     * The Client::hasPermission method should return true if the asked permission was
+     * previously added to the client
+     */
     public function testClientHasPermissionAfterItHasBeenAdded()
     {
         $permissionIdentifier = new PermissionIdentifier('some_permission');
@@ -63,6 +70,10 @@ class ClientTest extends Test
         $this->assertTrue($this->client->hasPermission($permissionIdentifier));
     }
 
+    /**
+     * The Client::hasPermission method should turn fase if the client does not
+     * have that permission.
+     */
     public function testClientHasPermissionReturnsFalseWhenNoPermissionsAdded()
     {
         $permissionIdentifier = new PermissionIdentifier('some_permission');
@@ -70,8 +81,19 @@ class ClientTest extends Test
         $this->assertFalse($this->client->hasPermission($permissionIdentifier));
     }
 
+    /**
+     * The Client::getKey should return the same value as was added via de constructor
+     */
     public function testClientGetKeyReturnsTheKeyThatWasAddedWhenTheObjectWasMade()
     {
         $this->assertTrue($this->client->getKey()->getValue() === $this->clientKey->getValue());
+    }
+
+    /**
+     * The Client::getKey method should return a concrete implementation of the ClientKeyInterface
+     */
+    public function testClientGetKeyReturnsAnImplementationOfClientKeyInterface()
+    {
+        $this->assertInstanceOf('\Gn\Api\Domain\Client\ClientKeyInterface', $this->client->getKey());
     }
 }
