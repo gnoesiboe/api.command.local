@@ -3,6 +3,7 @@
 namespace Gn\Api\Domain\Client;
 
 use Symfony\Component\Validator\Constraints\Length;
+use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Validation;
 
 /**
@@ -12,12 +13,12 @@ class ClientIdentifier
 {
 
     /**
-     * @var string
+     * @var int
      */
-    const VALUE_MIN_LENGTH = 1;
+    const VALUE_MIN_LENGTH = 3;
 
     /**
-     * @var string
+     * @var int
      */
     const VALUE_MAX_LENGTH = 50;
 
@@ -45,21 +46,28 @@ class ClientIdentifier
 
     /**
      * @param string $value
-     * @throws \UnexpectedValueException
+     * @throws ClientIdentifierInvalidException
      */
     private function validateValue($value)
     {
         if (is_string($value) === false) {
-            throw new \UnexpectedValueException('Value should be of type string');
+            throw new ClientIdentifierInvalidException('Value should be of type string');
         }
 
-        $violations = Validation::createValidator()->validateValue($value, new Length(array(
+        $notBlankConstraint = new NotBlank();
+
+        $lengthConstraint = new Length(array(
             'min' => self::VALUE_MIN_LENGTH,
             'max' => self::VALUE_MAX_LENGTH
-        )));
+        ));
+
+        $violations = Validation::createValidator()->validateValue($value, array(
+            $notBlankConstraint,
+            $lengthConstraint
+        ));
 
         if ($violations->count() !== 0) {
-            throw new \UnexpectedValueException(sprintf(
+            throw new ClientIdentifierInvalidException(sprintf(
                 'Value should have a minimal length of %d and a max of %d characters',
                 self::VALUE_MIN_LENGTH,
                 self::VALUE_MAX_LENGTH
