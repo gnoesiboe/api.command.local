@@ -1,0 +1,25 @@
+#!/usr/bin/env php
+<?php
+
+use Gn\Api\Console;
+use App\ContainerFactory;
+
+require_once dirname(__FILE__) . '/../../vendor/autoload.php';
+
+error_reporting(E_ALL);
+
+$autoloader = new \Symfony\Component\ClassLoader\ClassLoader();
+$autoloader->addPrefixes(array(
+    'App' => dirname(__FILE__) . '/../',
+    'Gn' => dirname(__FILE__) . '/../'
+));
+$autoloader->register();
+
+$container = \App\ContainerFactory::create()->generateContainer();
+
+/** @var \Gn\Api\TaskFactory $taskFactory */
+$taskFactory = $container->get('factory.task');
+
+$console = new Console();
+$console->add($taskFactory->generateClearCacheTask());
+$console->run();
