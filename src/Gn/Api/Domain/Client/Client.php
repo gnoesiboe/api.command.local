@@ -3,6 +3,7 @@
 namespace Gn\Api\Domain\Client;
 
 use Doctrine\Common\Collections\ArrayCollection;
+use Gn\Api\Domain\Permission\Permission;
 use Gn\Api\Domain\Permission\PermissionIdentifier;
 use Gn\Api\Domain\Permission\PermissionInterface;
 
@@ -63,6 +64,17 @@ class Client implements ClientInterface
         $this->updatedAt = new \DateTime();
 
         $this->permissions = new ArrayCollection();
+    }
+
+    /**
+     * @param PermissionInterface $permission
+     * @return Client
+     */
+    public function addPermission(PermissionInterface $permission)
+    {
+        $this->permissions[] = $permission;
+
+        return $this;
     }
 
     /**
