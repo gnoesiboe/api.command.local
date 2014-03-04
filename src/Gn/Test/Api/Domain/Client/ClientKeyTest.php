@@ -29,24 +29,28 @@ class ClientKeyTest extends Test
 
         try {
             new ClientKey($someInt);
+            $this->assertTrue(false, 'Code should not get to this point as the error should be triggered');
         } catch (\Exception $e) {
             $this->assertInstanceOf($this->clientKeyInvalidExceptionClassName, $e);
         }
 
         try {
             new ClientKey($someFloat);
+            $this->assertTrue(false, 'Code should not get to this point as the error should be triggered');
         } catch (\Exception $e) {
             $this->assertInstanceOf($this->clientKeyInvalidExceptionClassName, $e);
         }
 
         try {
             new ClientKey($someObject);
+            $this->assertTrue(false, 'Code should not get to this point as the error should be triggered');
         } catch (\Exception $e) {
             $this->assertInstanceOf($this->clientKeyInvalidExceptionClassName, $e);
         }
 
         try {
             new ClientKey($someBool);
+            $this->assertTrue(false, 'Code should not get to this point as the error should be triggered');
         } catch (\Exception $e) {
             $this->assertInstanceOf($this->clientKeyInvalidExceptionClassName, $e);
         }
