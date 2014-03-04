@@ -16,6 +16,9 @@ class ClientIdentifierTest extends Test
      */
     protected $clientIdentifierInvalidExceptionClassName = '\Gn\Api\Domain\Client\ClientIdentifierInvalidException';
 
+    /**
+     * The value object should only allow string values
+     */
     public function testOnlyAcceptsAStringValue()
     {
         $someInt = 3923;
@@ -56,6 +59,9 @@ class ClientIdentifierTest extends Test
         new ClientIdentifier($someString);
     }
 
+    /**
+     * The value object should only allow strings within a specific length range
+     */
     public function testOnlyAcceptsAStringValueWithALengthBetween1And50Characters()
     {
         $toShort = str_repeat('x', ClientIdentifier::VALUE_MIN_LENGTH - 1);
@@ -80,6 +86,9 @@ class ClientIdentifierTest extends Test
         new ClientIdentifier($justRight);
     }
 
+    /**
+     * The value object's value should be the value that was added in the first place
+     */
     public function testGetValueReturnsTheValueThatWasAdded()
     {
         $value = 'abcdefghij';
