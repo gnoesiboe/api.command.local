@@ -2,6 +2,7 @@
 
 namespace Gn\Api\Repository;
 
+use Gn\Api\Domain\Client\Client;
 use Gn\Api\Domain\Client\ClientKey;
 use Gn\Api\Domain\Client\ClientRepositoryInterface;
 use Doctrine\ORM\EntityRepository;
@@ -14,7 +15,7 @@ class ClientRepository extends EntityRepository implements ClientRepositoryInter
 
     /**
      * @param ClientKey $key
-     * @return ClientRepository
+     * @return Client|null
      */
     public function findOneByKeyWithPermissions(ClientKey $key)
     {
