@@ -16,7 +16,6 @@ $autoloader->register();
 
 $diContainer = ContainerFactory::create()->generateContainer();
 
-//@todo possibility to use other response adapters for JSON/XML etc. => accept headers
 $response = RequestHandler::create(new RequestHandlerServiceLocator($diContainer))->execute();
 $response->send();
 
