@@ -26,3 +26,13 @@ Add vhost to your hosts file for ip address 192.168.3.10
 ```
 192.168.3.10  api.command.local
 ```
+
+
+Unit tests
+=================
+
+Ga naar ./src/App/Test en run:
+
+```
+phpunit --testdox
+```
