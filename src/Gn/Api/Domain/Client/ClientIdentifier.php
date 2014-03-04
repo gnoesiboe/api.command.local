@@ -2,6 +2,7 @@
 
 namespace Gn\Api\Domain\Client;
 
+use Gn\Api\Domain\SingleValueObjectInterface;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Validation;
@@ -9,7 +10,7 @@ use Symfony\Component\Validator\Validation;
 /**
  * ClientIdentifier
  */
-class ClientIdentifier
+class ClientIdentifier implements SingleValueObjectInterface
 {
 
     /**
